@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4x05hvurp7ex"]
+
+[ext_resource type="Script" path="res://Mod.gd" id="1_d70vt"]
+[ext_resource type="Texture2D" uid="uid://dpm0t8tdyaqvm" path="res://ui/laser.png" id="2_fpc7a"]
+[ext_resource type="AudioStream" uid="uid://158av6rbv3l3" path="res://sound/burst.wav" id="3_u0ve1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yv8g"]
+size = Vector2(3, 9)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1j6rk"]
+radius = 1.5
+
+[node name="Mod" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 4
+mass = 0.1
+inertia = 1.0
+script = ExtResource("1_d70vt")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.375, 0.75)
+texture = ExtResource("2_fpc7a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2yv8g")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-1.5, -4.5, 3, 12)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1.5)
+shape = SubResource("CircleShape2D_1j6rk")
+
+[node name="gun" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_u0ve1")
+volume_db = -1.42
+pitch_scale = 0.24
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

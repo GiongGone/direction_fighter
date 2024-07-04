@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://bc3erk4qxgaat"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_3jwbj"]
+[ext_resource type="Texture2D" uid="uid://capgy7607kako" path="res://art/Mantis/Hull_0008_Jet.png" id="2_q6cgo"]
+[ext_resource type="Texture2D" uid="uid://cji2f7qvc000t" path="res://art/Mantis/Hull_0003_Hull.png" id="3_hpqkg"]
+[ext_resource type="Texture2D" uid="uid://onou5b4m5g5f" path="res://art/Mantis/Hull_0004_SmallGunM2-copy-2.png" id="4_mgo3p"]
+[ext_resource type="Texture2D" uid="uid://bcvdpi0xgx2gq" path="res://art/Mantis/Hull_0006_SmallGunM2-copy.png" id="5_rpj6q"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u33i8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_q6cgo")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_q6cgo")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_q6cgo")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r42fd"]
+size = Vector2(44, 44)
+
+[node name="Player" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_3jwbj")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_u33i8")
+animation = &"fly"
+
+[node name="Sprite2D2" type="Sprite2D" parent="AnimatedSprite2D"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_q6cgo")
+offset = Vector2(0, 10)
+flip_h = true
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
+texture = ExtResource("3_hpqkg")
+
+[node name="Sprite2D3" type="Sprite2D" parent="AnimatedSprite2D"]
+texture = ExtResource("4_mgo3p")
+
+[node name="Sprite2D4" type="Sprite2D" parent="AnimatedSprite2D"]
+texture = ExtResource("5_rpj6q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+rotation = 1.1781
+skew = -0.785398
+shape = SubResource("RectangleShape2D_r42fd")
+
+[node name="bag" type="Marker2D" parent="."]
+position = Vector2(15, -30)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
